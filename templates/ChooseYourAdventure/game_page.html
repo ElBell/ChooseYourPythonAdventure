@@ -1,0 +1,17 @@
+ {% extends 'base.html' %}
+
+ {% block title %}
+     Play Game
+ {% endblock %}
+
+
+{% block content %}
+
+    <button onclick="brython({debug:1, ipy_id:['code']})">Run</button>
+    <pre id="code">
+    {{ game.code }}
+    </pre>
+
+    <script type="text/javascript" src="brython.js"></script>
+    <script type="text/javascript" src="brython_stdlib.js"></script>
+{% endblock %}

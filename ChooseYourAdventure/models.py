@@ -27,10 +27,10 @@ class Game(models.Model):
     title = models.CharField(max_length=100)
     creator = models.ForeignKey(User, related_name="creator", null=True, on_delete=models.SET_NULL)
     description = models.CharField(blank=True, max_length=250)
-    code = models.TextField()
+    code = models.TextField(null=True)
     url = models.CharField(max_length=200)
-    date_created = models.DateTimeField
-    date_modified = models.DateTimeField
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_modified = models.DateTimeField(auto_now=True)
     keywords = models.ManyToManyField(Keyword, verbose_name="list of keywords")
     objects = GamesQuerySet.as_manager()
 
