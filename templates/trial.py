@@ -1,15 +1,19 @@
- {% extends 'base.html' %}
+# -*- coding: utf-8 -*-
+"""
+Text Adventure Game
+An adventure in making adventure games.
 
- {% block title %}
-     Game: {{ game.title }}
- {% endblock %}
+To test your current solution, run the `test_my_solution.py` file.
 
-{% block content %}
-    <h3>{{ game.description }}</h3>
-    <script type="text/javascript" src="../../static/js/vendor/brython/brython.js"></script>
-    <script type="text/javascript" src="../../static/js/vendor/brython/brython_stdlib.js"></script>
-    <body onload="brython()">
-        <script type="text/python">
+Refer to the instructions on Canavs for more information.
+
+"I have neither given nor received help on this assignment."
+author: YOUR NAME HERE
+"""
+__version__ = 2
+
+
+# 2) print_introduction: Print a friendly welcome message for your game
 def print_introduction():
     print("== The Spooky Adventure ==")
     print("    = By Dr. Bart =")
@@ -158,6 +162,3 @@ if __name__ == "__main__":
     # print_introduction()
     # print(get_initial_state())
     # ...
-        </script>
-    </body>
-{% endblock %}
