@@ -126,3 +126,4 @@ LOGOUT_REDIRECT_URL = 'welcome'
 LOGIN_URL = 'login'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
