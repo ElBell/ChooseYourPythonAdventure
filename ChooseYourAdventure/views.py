@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
 from ChooseYourAdventure.forms import GameForm
@@ -25,3 +25,10 @@ def new_game(request):
     else:
         form = GameForm()
     return render(request, 'ChooseYourAdventure/new_game_form.html', {'form': form})
+
+
+def game_page(request, url):
+    game = get_object_or_404(Game, url=url)
+    return render(request,
+                  'ChooseYourAdventure/game_page.html',
+                  {'game': game})

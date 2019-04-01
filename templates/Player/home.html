@@ -9,7 +9,9 @@
         <h4>Games you've created:</h4>
         <ul>
             {%  for game in games_by_user %}
-                <li>{{ game.title }} : {{ game.description }}</li>
+                <a class="list-group-item" href="{{ game.get_absolute_url }}">
+                    {{ game.title }} : {{ game.description }}
+                </a>
             {% endfor %}
         </ul>
     </div>

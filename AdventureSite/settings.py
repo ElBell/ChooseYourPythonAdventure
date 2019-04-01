@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'bootstrap',
     'fontawesome',
     'ChooseYourAdventure.apps.ChooseyouradventureConfig',
-    'Player.apps.PlayerConfig'
+    'Player.apps.PlayerConfig',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -123,3 +124,5 @@ STATICFILES_DIRS = 'static',
 LOGIN_REDIRECT_URL = 'player_home'
 LOGOUT_REDIRECT_URL = 'welcome'
 LOGIN_URL = 'login'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

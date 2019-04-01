@@ -11,7 +11,14 @@
         <h4>Games to choose from</h4>
         <ul>
             {%  for game in games %}
-                <li>{{ game.title }} : {{ game.description }}</li>
+                <a class="list-group-item" href="{{ game.get_absolute_url }}">
+                    <div class="row">
+                        {{ game.title }} by {{ game.creator }}
+                    </div>
+                    <div class="row">
+                        {{ game.description }}
+                    </div>
+                </a>
             {% endfor %}
         </ul>
     </div>

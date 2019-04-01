@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 
@@ -24,15 +25,18 @@ class Keyword(models.Model):
 
 
 class Game(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100, help_text='Pick a snazzy title')
     creator = models.ForeignKey(User, related_name="creator", null=True, on_delete=models.SET_NULL)
     description = models.CharField(blank=True, max_length=250)
-    code = models.TextField(null=True)
-    url = models.CharField(max_length=200)
+    code = models.TextField(null=True, help_text='Add your game code here')
+    url = models.CharField(max_length=200, unique=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     keywords = models.ManyToManyField(Keyword, verbose_name="list of keywords")
     objects = GamesQuerySet.as_manager()
+
+    def get_absolute_url(self):
+        return reverse('game_page', args=[self.url])
 
     def __str__(self):
         return "{} by {}".format(self.title, self.creator)
