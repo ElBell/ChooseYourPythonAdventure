@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+    <div class="col-sm-8 col-md-7 py-4">
+        <h1>Welcome, {{ user.username }}</h1>
+        <p class="text-muted">There are currently  {{ total_games }} games in the database</p>
+    </div>
+    <div>
+        <h4>Games you've created:</h4>
+        <ul>
+            {%  for game in games_by_user %}
+                <li>{{ game.title }} : {{ game.description }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
