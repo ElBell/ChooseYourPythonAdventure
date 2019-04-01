@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock %}
 {% block content %}
-    <div class="col-sm-8 col-md-7 py-4">
+    <div class="row">
         <h1>Welcome, {{ user.username }}</h1>
         <p class="text-muted">There are currently  {{ total_games }} games in the database</p>
     </div>
@@ -12,5 +12,10 @@
                 <li>{{ game.title }} : {{ game.description }}</li>
             {% endfor %}
         </ul>
+    </div>
+    <div class="row">
+        <a href="{% url 'new_game' %}">
+            Create another game
+        </a>
     </div>
 {% endblock %}

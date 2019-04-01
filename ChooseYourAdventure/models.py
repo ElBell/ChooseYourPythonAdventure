@@ -27,7 +27,7 @@ class Game(models.Model):
     title = models.CharField(max_length=100)
     creator = models.ForeignKey(User, related_name="creator", null=True, on_delete=models.SET_NULL)
     description = models.CharField(blank=True, max_length=250)
-    code = models.TextField
+    code = models.TextField()
     url = models.CharField(max_length=200)
     date_created = models.DateTimeField
     date_modified = models.DateTimeField
