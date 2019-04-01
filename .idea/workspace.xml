@@ -2,19 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3d817ada-54f8-421f-a0cc-d7aaf69f0c0d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/templates/Player/signup.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AdventureSite/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/AdventureSite/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChooseYourAdventure/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/ChooseYourAdventure/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChooseYourAdventure/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/ChooseYourAdventure/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChooseYourAdventure/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ChooseYourAdventure/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Player/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Player/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/ChooseYourAdventure/game_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ChooseYourAdventure/game_page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/ChooseYourAdventure/new_game_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ChooseYourAdventure/new_game_form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/ChooseYourAdventure/welcome.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ChooseYourAdventure/welcome.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/Player/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Player/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/login.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -131,6 +119,15 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/registration/login.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="276">
+              <caret line="12" column="57" selection-start-line="12" selection-start-column="57" selection-end-line="12" selection-end-column="57" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Player/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="263">
@@ -192,7 +189,6 @@
         <option value="$PROJECT_DIR$/static/index.html" />
         <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/templates/Player/login_form.html" />
-        <option value="$PROJECT_DIR$/templates/registration/login.html" />
         <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="$PROJECT_DIR$/AdventureSite/urls.py" />
         <option value="$PROJECT_DIR$/ChooseYourAdventure/forms.py" />
@@ -207,6 +203,7 @@
         <option value="$PROJECT_DIR$/Player/urls.py" />
         <option value="$PROJECT_DIR$/templates/Player/signup.html" />
         <option value="$PROJECT_DIR$/Player/views.py" />
+        <option value="$PROJECT_DIR$/templates/registration/login.html" />
       </list>
     </option>
   </component>
@@ -391,12 +388,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1553964587186</updated>
-      <workItem from="1553964606663" duration="28131000" />
+      <workItem from="1553964606663" duration="28405000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28131000" />
+    <option name="totallyTimeSpent" value="28405000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="6" />
@@ -539,13 +536,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/registration/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-250">
-          <caret line="7" column="34" lean-forward="true" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/ChooseYourAdventure/new_game_form.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="253">
@@ -618,13 +608,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/Player/signup.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="4" column="16" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ChooseYourAdventure/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -642,6 +625,20 @@
           <folding>
             <element signature="e#0#57#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/Player/signup.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="16" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/registration/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="12" column="57" selection-start-line="12" selection-start-column="57" selection-end-line="12" selection-end-column="57" />
         </state>
       </provider>
     </entry>
