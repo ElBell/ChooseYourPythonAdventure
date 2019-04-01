@@ -8,8 +8,27 @@
     <h3>{{ game.description }}</h3>
     <script type="text/javascript" src="../../static/js/vendor/brython/brython.js"></script>
     <script type="text/javascript" src="../../static/js/vendor/brython/brython_stdlib.js"></script>
-    <body onload="brython()">
+    <p><div id="play_zone" class="zone"></div>
+
+        <button type="submit" id="play_button">submit input</button>
+        <p><label for="play_input"></label><input id="play_input" autocomplete="off" value="test">
+    <body onload="brython({ debug:1 })">
         <script type="text/python">
+from browser import document, html
+
+def show_value(event):
+    document["play_zone"] <= ({ document["play_input"].value }, html.BR())
+
+document["play_button"].bind("click", show_value)
+
+def print(string_input):
+    document["play_zone"] <= ({string_input}, html.BR())
+
+def input(string_input):
+    # document["play_zone"] <= ({string_input}, html.BR())
+    # return { input }
+    print("hello")
+
 def print_introduction():
     print("== The Spooky Adventure ==")
     print("    = By Dr. Bart =")
@@ -29,7 +48,7 @@ def get_initial_state():
 # 4) print_current_state: Print some text describing the current game world
 def print_current_state(player):
     print("*" * 40)
-    print("You are in", player['location'])
+    print("You are in " + player['location'])
     if player['location'] == 'Yard':
         print("There is a house ahead of you, and the forest behind you.")
     elif player['location'] == 'Forest':
@@ -70,7 +89,7 @@ def get_options(player):
 def print_options(options):
     print("Choose a command:")
     for option in options:
-        print("\t", option)
+        print("\t" + option)
 
 
 # 7) get_user_input: Repeatedly prompt the user to choose a valid command
