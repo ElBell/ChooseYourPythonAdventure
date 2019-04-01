@@ -20,5 +20,5 @@ from ChooseYourAdventure import views as cya_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('player/', include('Player.urls')),
-    path('', cya_views.welcome)
+    path('', cya_views.welcome, name='welcome'),
 ]
