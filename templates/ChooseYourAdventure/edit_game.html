@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+ {% block title %}
+    Edit Game
+ {% endblock %}
+
+
+{% block content %}
+    <a class="btn btn-dark" href="{{ game.get_absolute_url }}">Play Game</a>
+    <form method="post">{% csrf_token %}
+    {{ form|crispy }}
+        <button type="submit" value="Update">Edit Game</button>
+    </form>
+{% endblock %}

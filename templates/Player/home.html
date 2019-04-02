@@ -9,7 +9,7 @@
         <h4>Games you've created:</h4>
         <ul>
             {%  for game in games_by_user %}
-                <a class="list-group-item" href="{{ game.get_absolute_url }}">
+                <a class="list-group-item" href="{% url 'edit_game' game.id %}">
                     {{ game.title }} : {{ game.description }}
                 </a>
             {% endfor %}

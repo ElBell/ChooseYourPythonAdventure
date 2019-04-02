@@ -36,7 +36,7 @@ class Game(models.Model):
     objects = GamesQuerySet.as_manager()
 
     def get_absolute_url(self):
-        return reverse('game_page', args=[self.url])
+        return reverse('game_page', args=[self.id])
 
     def __str__(self):
         return "{} by {}".format(self.title, self.creator)
