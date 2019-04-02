@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Welcome{% endblock %}
 {% block content %}
-    <div class="jumbotron">
+    <div class="jumbotron" style="background-color: #9eee9f">
     <div class="container">
         <h1>Hello, world!</h1>
         <h3>There are currently  {{ total_games }} games in the database</h3>
@@ -11,7 +11,7 @@
         <h4>Games to choose from</h4>
         <ul>
             {%  for game in games %}
-                <a class="list-group-item" href="{{ game.get_absolute_url }}">
+                <a class="list-group-item" style="background-color: #f8f8a9" href="{{ game.get_absolute_url }}">
                     <div class="row">
                         {{ game.title }} by {{ game.creator }}
                     </div>
