@@ -113,7 +113,7 @@
         "<div class='input-group mb-3'>",
             "<input disabled class='game-input form-control' autocomplete='off'>",
             "<div class='input-group-append'>",
-                "<button type='button' disabled class='btn btn-secondary game-enter'>Enter</button>",
+                "<button type='button' disabled class='btn btn-info game-enter'>Enter</button>",
             "</div>",
         "</div>",
         ].join("\n");
@@ -136,7 +136,7 @@
         "def __draw_world(world):",
         "    __terminal <= render(world)",
         "    __terminal <= BR()",
-        "    __cap.scrollIntoView({'behavior': 'smooth'})",
+        "    __input.scrollIntoView({'behavior': 'smooth'})",
         "    options = get_options(world)",
         // Do autocomplete and selectable buttons
         "    for option in options:",
