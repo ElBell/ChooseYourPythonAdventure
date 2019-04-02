@@ -1,0 +1,5 @@
+django
+django-bootstrap-static
+brython
+django-crispy-forms
+pytz
