@@ -3,3 +3,4 @@ django-bootstrap-static
 brython
 django-crispy-forms
 pytz
+django_heroku
