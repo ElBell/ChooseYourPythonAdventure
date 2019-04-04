@@ -513,9 +513,8 @@ def choose(options):
     return command
 
 ###### Win/Lose Paths #####
-## The autograder will use these to try out your game
-## WIN_PATH (list[str]): A list of commands that win the game when entered
-## LOSE_PATH (list[str]): A list of commands that lose the game when entered.
+### WIN_PATH (list[str]): A list of commands that win the game when entered
+### LOSE_PATH (list[str]): A list of commands that lose the game when entered.
 
 WIN_PATH = ['Go to Town', 'Go to Chapel', 'Wait Patiently', # Get bark
             'Go to Town', 'Go to Castle', 'Meet Pumpkin', 'Bark', # Get pumpkin
