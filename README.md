@@ -14,7 +14,7 @@ A Django app for saving and running text-based adventure games written in Python
 
 __author__ = "_____@gmail.com"\
 __version__ = 1\
-__date__ = "Spring 2019"\
+__date__ = "Spring 2019"
 
 
 ##### Record Definitions #####
