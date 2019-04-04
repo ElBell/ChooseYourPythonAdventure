@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from ChooseYourAdventure.models import *
+from chooseyouradventure.models import *
 
 
 @admin.register(Game)

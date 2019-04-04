@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 
-from ChooseYourAdventure.models import Game
+from chooseyouradventure.models import Game
 
 
 class GameForm(ModelForm):

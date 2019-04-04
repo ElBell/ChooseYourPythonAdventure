@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
             name='Progress',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('game', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='ChooseYourAdventure.Game')),
+                ('game', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='chooseyouradventure.Game')),
                 ('player', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='player', to=settings.AUTH_USER_MODEL)),
             ],
         ),
@@ -44,13 +44,13 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('comment', models.CharField(max_length=255)),
-                ('game', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='ChooseYourAdventure.Game')),
+                ('game', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='chooseyouradventure.Game')),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.AddField(
             model_name='game',
             name='keywords',
-            field=models.ManyToManyField(to='ChooseYourAdventure.Keyword', verbose_name='list of keywords'),
+            field=models.ManyToManyField(to='chooseyouradventure.Keyword', verbose_name='list of keywords'),
         ),
     ]

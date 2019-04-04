@@ -2,8 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
-from ChooseYourAdventure.forms import GameForm, UpdateForm
-from ChooseYourAdventure.models import Game
+from chooseyouradventure.forms import GameForm, UpdateForm
+from chooseyouradventure.models import Game
 
 
 def welcome(request):

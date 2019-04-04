@@ -7,8 +7,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
-from ChooseYourAdventure.models import Game
-from Player.forms import SignUpForm
+from chooseyouradventure.models import Game
+from player.forms import SignUpForm
 
 
 @login_required
