@@ -6,3 +6,4 @@ django-crispy-forms
 pytz
 django_heroku
 gunicorn
+dj_database_url
