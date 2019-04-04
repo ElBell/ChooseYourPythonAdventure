@@ -1,25 +1,33 @@
 {% extends 'base.html' %}
 {% block title %}Welcome{% endblock %}
 {% block content %}
-    <div class="jumbotron" style="background-color: #9eee9f">
+    <style>
+    a.custom-card,
+    a.custom-card:hover {
+      color: #212529;
+      text-decoration: none;
+    }
+    </style>
+    <div class="jumbotron" style="background-color: white">
     <div class="container">
         <h1>Hello, world!</h1>
         <h3>There are currently  {{ total_games }} games in the database</h3>
+        <h3>Please click one below:</h3>
     </div>
     </div>
-    <div class="row">
-        <h4>Games to choose from</h4>
-        <ul>
+    <div class="row justify-content-center">
             {%  for game in games %}
-                <a class="list-group-item" style="background-color: #f8f8a9" href="{{ game.get_absolute_url }}">
-                    <div class="row">
-                        {{ game.title }} by {{ game.creator }}
-                    </div>
-                    <div class="row">
-                        {{ game.description }}
-                    </div>
+                <a href="{{  game.get_absolute_url }}" class="custom-card">
+                <div class="col-auto mb-4">
+                <div class="card">
+                <h3 class="card-header"><i class="fas fa-play-circle"></i> {{ game.title }}</h3>
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">By {{ game.creator }}</h6>
+                    <p class="card-text">{{ game.description }}</p>
+                </div>
+                </div>
+                </div>
                 </a>
             {% endfor %}
-        </ul>
     </div>
 {% endblock %}
