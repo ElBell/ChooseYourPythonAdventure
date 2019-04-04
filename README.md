@@ -10,20 +10,12 @@ A Django app for saving and running text-based adventure games written in Python
 """
 ## Text Adventure Game
 A chance to make your own Text Adventure Game.
-This is an INDIVIDUAL project. Do not consult with others or share code.
-Refer to the instructions on Canvas for more information.
-
-
-## When You Are Done
-When you pass all tests, remember to clean and document your code.
-Be sure to unit test and document your functions.
-"""
 
 ##### Author Info #####
 
 ## TODO: Replace the underlines below with your email
 
-__author__ = "_____@udel.edu"
+__author__ = "_____@gmail.com"
 __version__ = 1
 __date__ = "Spring 2019"
 
