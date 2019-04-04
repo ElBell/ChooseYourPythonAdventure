@@ -13,7 +13,7 @@ from player.forms import SignUpForm
 
 @login_required
 def home(request):
-    return render(request, "player/home.html",
+    return render(request, "Player/home.html",
                   {'games_by_user': Game.objects.games_by_user(request.user),
                    'num_player_games':  Game.objects.games_by_user(request.user).count()})
 
