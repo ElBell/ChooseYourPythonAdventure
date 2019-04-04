@@ -237,6 +237,7 @@
     Game.prototype.start = function() {
         this.target.find(".game-error").hide();
         this.target.find('.game-directions').show();
+        //this.target.find(".game-lines").text("Game loading - please wait!");
         this.target.find(".game-lines").text("Game loading - please wait!");
         this.target.find(".game-start").text("Stop").removeClass("btn-success").addClass("btn-danger");
         this.target.find(".game-input").val('').prop('disabled', false);
@@ -286,7 +287,6 @@
         ].join("\n");
         console.log(gameRunner);
         console.log(evalPython(gameRunner));
-        console.log("***********************\n")
     }
     
     Game.prototype.stop = function() {
