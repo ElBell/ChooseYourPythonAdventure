@@ -1,3 +1,4 @@
+dj-config-url
 django
 django-bootstrap-static
 brython
@@ -5,3 +6,4 @@ django-crispy-forms
 pytz
 django_heroku
 gunicorn
+dj_database_url
