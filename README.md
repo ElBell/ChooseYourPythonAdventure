@@ -8,16 +8,13 @@ A Django app for saving and running text-based adventure games written in Python
 
 
 """
-## Text Adventure Game
-A chance to make your own Text Adventure Game.
-
 ##### Author Info #####
 
-## TODO: Replace the underlines below with your email
+#### TODO: Replace the underlines below with your email
 
-__author__ = "_____@gmail.com"
-__version__ = 1
-__date__ = "Spring 2019"
+__author__ = "_____@gmail.com"\
+__version__ = 1\
+__date__ = "Spring 2019"\
 
 
 ##### Record Definitions #####
