@@ -30,11 +30,11 @@
     
     .game-terminal {
         width: 80ch;
-        /*height: 40ch;*/
+        height: 40ch;
         white-space: pre;
         background-color: #f9f1e5;
-        font-family: Chalkduster, Luminari, monospace;
-        /*overflow-y: auto;*/
+        font-family: Luminari, Chalkduster, monospace;
+        overflow-y: auto;
     }
 
     .game-error {
@@ -134,6 +134,7 @@
         "def __draw_world(world):",
         "    __terminal <= render(world)",
         "    __terminal <= BR()",
+        "    __cap.scrollIntoView({'behavior': 'smooth'})",
         "    __input.scrollIntoView({'behavior': 'smooth'})",
         "    options = get_options(world)",
         // Do autocomplete and selectable buttons
@@ -147,6 +148,7 @@
         "    __terminal <= message",
         "    __terminal <= BR()",
         "    __cap.scrollIntoView({'behavior': 'smooth'})",
+        "    __input.scrollIntoView({'behavior': 'smooth'})",
         "    __input.value = ''",
         "    if world['status'] == 'playing':",
         "        __draw_world(world)",
