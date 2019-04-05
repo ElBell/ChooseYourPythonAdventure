@@ -1,10 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
 
 # Create your views here.
 from chooseyouradventure.forms import GameForm, UpdateForm
-from chooseyouradventure.models import Game
-
+from chooseyouradventure.models import Game, Star
 
 def welcome(request):
     return render(request, "ChooseYourAdventure/welcome.html",
@@ -27,9 +27,10 @@ def new_game(request):
 
 def game_page(request, id):
     game = get_object_or_404(Game, id=id)
+    liked = Star.objects.filter(game=game, user=request.user, comment='like')
     return render(request,
                   'ChooseYourAdventure/game_page.html',
-                  {'game': game})
+                  {'game': game, 'liked': liked})
 
 
 def edit_game(request, id):
@@ -45,3 +46,19 @@ def edit_game(request, id):
         return render(request,
                       'ChooseYourAdventure/game_page.html',
                       {'game': game})
+
+def log_event(request, id):
+    game = get_object_or_404(Game, id=id)
+    user = request.user
+    event = request.POST.get('event', 'unknown')
+    if event not in Star.VALID_EVENTS:
+        return JsonResponse({'success': False, 'message': 'Invalid event'})
+    if event == 'like':
+        liked = Star.objects.filter(game=game, user=request.user, comment='like')
+        if liked:
+            liked.delete()
+        else:
+            Star.objects.create(game=game, user=request.user, comment='like')
+    else:
+        Star.objects.get_or_create(game=game, user=user, comment=event)
+    return JsonResponse({'success': True, 'message': 'Event logged'})

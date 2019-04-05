@@ -23,6 +23,10 @@
                 <h3 class="card-header"><i class="fas fa-play-circle"></i> {{ game.title }}</h3>
                 <div class="card-body">
                     <h6 class="card-subtitle mb-2 text-muted">By {{ game.creator }}</h6>
+                    <p class="card-subtitle mb-2 text-muted">
+                        {{ game.count_views }} views |
+                        {{ game.count_starts }} plays |
+                        {{ game.count_likes }} likes</p>
                     <p class="card-text">{{ game.description }}</p>
                 </div>
                 </div>

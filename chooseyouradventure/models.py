@@ -1,6 +1,9 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+from django.utils.encoding import smart_bytes
+
+import base64
 
 # Create your models here.
 
@@ -41,6 +44,16 @@ class Game(models.Model):
     def __str__(self):
         return "{} by {}".format(self.title, self.creator)
 
+    def count_stars(self, event):
+        return len(Star.objects.filter(game=self.id, comment=event))
+
+    def count_views(self):
+        return self.count_stars('view')
+    def count_starts(self):
+        return self.count_stars('start')
+    def count_likes(self):
+        return self.count_stars('like')
+
 
 class Progress(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
@@ -55,6 +68,8 @@ class Star(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     comment = models.CharField(max_length=255)
+
+    VALID_EVENTS = ('like', 'view', 'start', 'stop', 'continue')
 
     def __str__(self):
         return "{}: {}".format(self.game, self.user)

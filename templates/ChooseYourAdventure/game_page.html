@@ -8,16 +8,26 @@
     <h3>{{ game.title }}</h3>
     <p>{{  game.description }}</p>
 
+    <!-- Fake progress while loading Brython -->
     <div id='fake-progress' class="progress">
-        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 50%"></div>
+        <div class="progress-bar progress-bar-striped progress-bar-animated"
+             role="progressbar" aria-valuenow="75" aria-valuemin="0"
+             aria-valuemax="100" style="width: 50%"></div>
     </div>
 
     <!-- Brython Libraries -->
     <script type="text/javascript" src="../../static/js/vendor/brython/brython.js"></script>
     <script type="text/javascript" src="../../static/js/vendor/brython/brython_stdlib.js"></script>
     <script>
+    // Hide the fake progress bar once Brython loads
     document.getElementById('fake-progress').remove();
+    // Each game stores runtime information on top-level Window variable
     window.GAMES = {};
+
+    /**
+     * Execute the given Python code as JavaScript
+     * @param src Python source code
+     */
     function evalPython(src) {
         __BRYTHON__.debug = 1;
         __BRYTHON__.curdir = ''; // Serious bug: need to set this or can't import os
@@ -57,10 +67,11 @@
     
     <script>
     // Main entry point
-    function Game(targetId, gameCode) {
+    function Game(targetId, gameCode, liked) {
         this.targetId = targetId;
         this.target = $("#"+targetId);
         this.code = gameCode;
+        this.liked = liked;
         this.started = false;
         this.fadeQueue = $({});
         this.registerGame();
@@ -68,6 +79,9 @@
         this.registerHandlers();
     }
 
+    /**
+     * Set top-level window variables for this game.
+     */
     Game.prototype.registerGame = function() {
         if (typeof window.GAMES === undefined) {
             window.GAMES = {};
@@ -78,19 +92,31 @@
             'scroll': this.scrollTerminal.bind(this),
             'triggerFade': this.triggerFade.bind(this),
         }
-    }
+    };
 
+    /**
+     * Use a single queue to sync up animations for each appearing
+     * element.
+     */
     Game.prototype.triggerFade = function(ele, speed) {
         let fadeQueue = this.fadeQueue;
         fadeQueue.queue(function (next) {
            $(ele.elt).fadeIn(speed, fadeQueue.dequeue.bind(fadeQueue));
         });
-    }
-    
+    };
+
+    /**
+     * Make buttons respond to clicks.
+     */
     Game.prototype.registerHandlers = function() {
         this.target.find('.game-start').click(this.handleStartStop.bind(this));
-    }
-    
+        this.target.find('.game-like').click(this.handleLike.bind(this));
+    };
+
+    /**
+     * Create the HTML for the entire game region and inject it into the
+     * given target DIV.
+     */
     Game.prototype.createInterface = function() {
         let interfaceComponents = [
             this.createButtons(),
@@ -99,14 +125,22 @@
             this.createInputs()
         ];
         this.target.html($(interfaceComponents.join("\n")));
-    }
-    
+        this.updateLiked();
+    };
+
+    /**
+     * Create all top-level menu buttons.
+     */
     Game.prototype.createButtons = function() {
         return [
         "<button type='button' class='btn btn-success game-start'>Start</button>",
+        "<button type='button' class='game-like btn'></button>",
         ].join("\n");
-    }
-    
+    };
+
+    /**
+     * Create the terminal region full of game lines (and a cap).
+     */
     Game.prototype.createTerminal = function() {
         return [
         "<div class='game-terminal'><div class='game-lines'>",
@@ -115,15 +149,22 @@
             "</div>",
         "</div>"
         ].join("\n");
-    }
+    };
 
+    /**
+     * Create a hidden alert box to display any errors.
+     */
     Game.prototype.createErrorArea = function() {
         return [
         "<div class='game-error alert alert-danger' style='display:none'>",
         "</div>"
         ].join("\n");
-    }
-    
+    };
+
+    /**
+     * Create the listbox for clicking options and the input box for entering
+     * commands.
+     */
     Game.prototype.createInputs = function() {
         return [
         "<span class='game-directions' style='display:none'>Choose an option...<span>",
@@ -140,91 +181,116 @@
         ].join("\n");
     };
 
+    /**
+     * Force the terminal to be scrolled into view.
+     */
     Game.prototype.scrollTerminal = function() {
         let terminal = this.target.find('.game-terminal');
         terminal.delay(100).animate({
-            scrollTop: terminal[0].scrollHeight //- terminal[0].clientHeight
+            scrollTop: terminal[0].scrollHeight
         }, 3000);
     };
 
+    /**
+     * Convert the JavaScript data to valid Python source code
+     * by converting it through JSON.
+     */
     function toPy(data) {
         return JSON.stringify(data);
     }
 
+    /**
+     * Make the given error message appear in the alert box,
+     * then make the alert box visible.
+     */
     Game.prototype.showError = function(message) {
         this.target.find('.game-error').show();
         this.target.text(message);
-    }
+    };
 
+    /**
+     * Brython source code for the actual game engine
+     * that can execute students' code and update the
+     * GUI.
+     */
     Game.prototype.ENGINE = [
+        // Import Brython stuff
         "from browser.html import BR, DIV",
         "from browser import window",
         "jq = window.jQuery",
-        //"q = jq({})",
-        //"previous = None",
+        // Helper function to make multiple lines fade in one at
+        //  a time. Uses a JS function (__triggerFade)
         "def __fadeLines(lines, speed=100):",
-        //"    global previous",
-        "    for i, line in enumerate(lines.split(chr(10))):",
+             // Can't embed '\n' in code without syntax error
+        "    for line in lines.split(chr(10)):",
+                 // Lines are initially hidden and then fade in
         "        text = DIV(line, style={'display': 'none'})",
         "        __terminal <= text",
         "        __triggerFade(text, speed)",
-        /*"        if previous is None:",
-        "            previous = jq(text).fadeIn(1000)",
-        "            __terminal <= previous",
-        "        else:",
-        "            previous = previous.delay(100).fadeIn(1000)",
-        "            __terminal <= previous",*/
-        //"        jq(text).delay(i*400).fadeIn(1000)",
+        // Reset terminal, fade in introductory text slowly
         "__terminal.text = ''",
-        "__fadeLines(render_introduction(), 300)",
-        "world = create_world()",
         "draw_speed = 300",
+        "__fadeLines(render_introduction(), draw_speed)",
+        // Create the world
+        "world = create_world()",
+        // Helper function for rendering the next state of the world
         "def __draw_world(world):",
         "    global draw_speed",
         "    __fadeLines(render(world), draw_speed)",
+             // Text speeds up after the intro
         "    draw_speed = 100",
-        //"    __cap.scrollIntoView({'behavior': 'smooth'})",
-        //"    __input.scrollIntoView({'behavior': 'smooth'})",
         "    __scroll()",
+             // Get the options from the user's code
         "    options = get_options(world)",
-        // Do autocomplete and selectable buttons
+             // Do autocomplete and selectable buttons
         "    for index, option in enumerate(options):",
         "        __selectors <= DIV(option, Class='list-group-item list-group-item-action')",
         "    for item in __selectors.select('div'):",
         "        item.bind('click', __handle_click)",
+        // Click handler for option selector (use option's text)
         "def __handle_click(event):",
-        //"    __terminal <= str(event.target.text)",
         "    __handle_command(event.target.text)",
+        // Draw the initial world
         "__draw_world(world)",
+        // Handler for any kind of submission from the input box
         "def __handle_submit(event):",
         "    command = __input.value",
         "    __handle_command(command)",
+        // Actually process the command chosen by the user
         "def __handle_command(command):",
+             // Update world and print any messages
         "    __fadeLines(update(world, command))",
-        //"    __cap.scrollIntoView({'behavior': 'smooth'})",
-        //"    __input.scrollIntoView({'behavior': 'smooth'})",
+             // Clear out old selectors/inputs
         "    __selectors.html = ''",
         "    __input.value = ''",
+             // If we're still playing...
         "    if world['status'] == 'playing':",
+                 // Draw the new world, then wait for next input.
         "        __draw_world(world)",
         "    else:",
+                 // Print the ending, and wrap things up.
         "        __fadeLines(render_ending(world))",
         "        __scroll()",
         "        __finish(event)",
+        // Unbind all handlers and then let JS finish cleaning up.
         "def __finish(event):",
         "    __enter.unbind('click', __handle_submit)",
         "    __input.unbind('keypress', __handle_enter)",
         "    __stop.unbind('click', __finish)",
         "    __end()",
+        // Respond to user pressing "enter" in input box.
         "def __handle_enter(event):",
-        "    if event.charCode == 13:",
+        "    if event.charCode == 13 or event.charCode == 10:",
         "        __handle_command(event)",
-        "",
+        // Associate input box and buttons with event handlers
         "__enter.bind('click', __handle_submit)",
         "__input.bind('keypress', __handle_enter)",
         "__stop.bind('click', __finish)",
     ].join("\n");
 
+    /**
+     * If the game is running, stop it. Otherwise, start it.
+     */
     Game.prototype.handleStartStop = function() {
         if (this.started) {
             this.stop();
@@ -232,22 +298,32 @@
             this.start();
         }
         this.started = !this.started;
-    }
-    
+    };
+
+    /**
+     * Start playing the game. Resets the UI to its initial state.
+     * There's a slight delay to let the UI update before Brython
+     * starts the long loading process.
+     */
     Game.prototype.start = function() {
         this.target.find(".game-error").hide();
         this.target.find('.game-directions').show();
         //this.target.find(".game-lines").text("Game loading - please wait!");
         this.target.find(".game-lines").text("Game loading - please wait!");
-        this.target.find(".game-start").text("Stop").removeClass("btn-success").addClass("btn-danger");
+        this.target.find(".game-start").text("Stop")
+            .removeClass("btn-success").addClass("btn-danger");
         this.target.find(".game-input").val('').prop('disabled', false);
         this.target.find(".game-enter").prop('disabled', false);
         this.target.find(".game-selectors").html("");
         setTimeout(() => {
             this.run();
         }, 300);
-    }
+        $.post('{% url 'log' game.id %}', {'event': 'start'});
+    };
 
+    /**
+     * Actually load in the Game Engine proper, which can take a while.
+     */
     Game.prototype.run = function() {
         let gameRunner = [
             'from browser import window, document',
@@ -270,14 +346,17 @@
             // Injecting student code
             "code = code[:code.find('def main():')]",
             "code = code + '''"+this.ENGINE+"'''",
-            // Execute
+            // Compile
             "compiled = compile(code, '__main__', 'exec')",
+            // Patch in needed components and data
             "sandbox = {'__terminal': terminal, '__input': input, ",
             "           '__enter': enter, '__cap': cap, '__end': end,",
             "           '__stop': stop, '__selectors': selectors, ",
             "           '__scroll': scroll, '__triggerFade': triggerFade}",
+            // Try execution
             "try:",
             "    exec(compiled, sandbox)",
+            // On error, display the traceback in the alert
             "except Exception as err:",
             "    message = traceback.format_exc()",
             "    error.text = message",
@@ -285,10 +364,15 @@
             // TODO: Error state would leave the handlers open
             ""
         ].join("\n");
+        // Game code shown in console
+        // TODO: remove this before official release
         console.log(gameRunner);
         console.log(evalPython(gameRunner));
-    }
-    
+    };
+
+    /**
+     * Disable the game's UI and mark the game as no longer started.
+     */
     Game.prototype.stop = function() {
         this.target.find(".game-input").prop('disabled', true);
         this.target.find(".game-enter").prop('disabled', true);
@@ -296,21 +380,66 @@
         this.target.find(".game-selectors").html("");
         this.target.find(".game-start").text("Start").addClass("btn-success").removeClass("btn-danger");
         this.started = false;
-    }
-    
+        $.post('{% url 'log' game.id %}', {'event': 'stop'});
+    };
+
+    Game.prototype.handleLike = function() {
+        $.post('{% url 'log' game.id %}', {'event': 'like'},
+            data => {
+                if (data.success) {
+                    this.liked = !this.liked;
+                    this.updateLiked();
+                }
+            }
+        );
+    };
+
+    Game.prototype.updateLiked = function() {
+        let button = this.target.find('.game-like');
+        if (this.liked) {
+            button.addClass('btn-info').removeClass('btn-outline-info');
+            button.html("<i class='fas fa-thumbs-up'></i> Liked!");
+        } else {
+            button.addClass('btn-outline-info').removeClass('btn-info');
+            button.html("Like");
+        }
+    };
+
+    main = null;
+    // Once the page is loaded, load in a game instance.
     $(document).ready(function() {
+        $.ajaxSetup({
+            headers: { "X-CSRFToken": '{{ csrf_token }}' }
+        });
         let gameCode = document.getElementById('source-code').innerText;
         let root = 'main-game';
-        main = new Game(root, gameCode);
+        main = new Game(root, gameCode, {{ liked|yesno:"true,false" }});
+        $.post('{% url 'log' game.id %}', {'event': 'view'});
+        //startTrackingTimer();
     });
+
+    /**
+     * Log player every 60 seconds
+     */
+    function startTrackingTimer() {
+        var wasActive = false;
+        const DELAY = 60000;
+        setInterval(function() {
+            if (wasActive) {
+                $.post('{% url 'log' game.id %}', {'event': 'continue'});
+                wasActive = false;;
+            }
+        }, DELAY);
+        $(this).on('mousemove keydown click', function () {
+            wasActive = true;
+        });
+    }
     
     </script>
     
     <!-- Play Zone -->
-    <div id="main-game">
-    Loading main game engine...
-    </div>
-    
+    <div id="main-game">Loading main game engine...</div>
     <pre id="source-code" class='d-none'>{{ game.code }}</pre>
+    <!-- End of Play Zone -->
 
 {% endblock %}
