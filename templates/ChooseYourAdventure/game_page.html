@@ -366,8 +366,8 @@
         ].join("\n");
         // Game code shown in console
         // TODO: remove this before official release
-        {#console.log(gameRunner);#}
-        {#console.log(evalPython(gameRunner));#}
+        console.log(gameRunner);
+        console.log(evalPython(gameRunner));
     };
 
     /**
@@ -427,7 +427,7 @@
         setInterval(function() {
             if (wasActive) {
                 $.post('{% url 'log' game.id %}', {'event': 'continue'});
-                wasActive = false;
+                wasActive = false;;
             }
         }, DELAY);
         $(this).on('mousemove keydown click', function () {

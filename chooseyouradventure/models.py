@@ -49,10 +49,8 @@ class Game(models.Model):
 
     def count_views(self):
         return self.count_stars('view')
-
     def count_starts(self):
         return self.count_stars('start')
-
     def count_likes(self):
         return self.count_stars('like')
 
