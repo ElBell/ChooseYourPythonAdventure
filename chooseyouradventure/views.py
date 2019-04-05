@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
+from ipware import get_client_ip
 
 # Create your views here.
 from chooseyouradventure.forms import GameForm, UpdateForm
@@ -27,7 +28,8 @@ def new_game(request):
 
 def game_page(request, id):
     game = get_object_or_404(Game, id=id)
-    liked = Star.objects.filter(game=game, user=request.user, comment='like')
+    user = request.user.id if not request.user.is_anonymous else get_client_ip(request)
+    liked = Star.objects.filter(game=game, user=user, comment='like')
     return render(request,
                   'ChooseYourAdventure/game_page.html',
                   {'game': game, 'liked': liked})
@@ -49,16 +51,16 @@ def edit_game(request, id):
 
 def log_event(request, id):
     game = get_object_or_404(Game, id=id)
-    user = request.user
+    user = request.user.id if not request.user.is_anonymous() else get_client_ip(request)
     event = request.POST.get('event', 'unknown')
     if event not in Star.VALID_EVENTS:
         return JsonResponse({'success': False, 'message': 'Invalid event'})
     if event == 'like':
-        liked = Star.objects.filter(game=game, user=request.user, comment='like')
+        liked = Star.objects.filter(game=game, user=user, comment='like')
         if liked:
             liked.delete()
         else:
-            Star.objects.create(game=game, user=request.user, comment='like')
+            Star.objects.create(game=game, user=user, comment='like')
     else:
         Star.objects.get_or_create(game=game, user=user, comment=event)
     return JsonResponse({'success': True, 'message': 'Event logged'})

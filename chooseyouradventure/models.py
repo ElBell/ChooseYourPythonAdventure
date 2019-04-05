@@ -66,7 +66,7 @@ class Progress(models.Model):
 
 class Star(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    user = models.CharField(max_length=255, default='Anonymous')
     comment = models.CharField(max_length=255)
 
     VALID_EVENTS = ('like', 'view', 'start', 'stop', 'continue')
