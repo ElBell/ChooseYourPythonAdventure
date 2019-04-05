@@ -49,6 +49,7 @@ def edit_game(request, id):
                       'ChooseYourAdventure/game_page.html',
                       {'game': game})
 
+
 def log_event(request, id):
     game = get_object_or_404(Game, id=id)
     user = request.user.id if not request.user.is_anonymous else get_client_ip(request)
@@ -62,5 +63,5 @@ def log_event(request, id):
         else:
             Star.objects.create(game=game, user=user, comment='like')
     else:
-        Star.objects.get_or_create(game=game, user=user, comment=event)
+        Star.objects.create(game=game, user=user, comment=event)
     return JsonResponse({'success': True, 'message': 'Event logged'})
