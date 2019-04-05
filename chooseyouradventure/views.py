@@ -51,7 +51,7 @@ def edit_game(request, id):
 
 def log_event(request, id):
     game = get_object_or_404(Game, id=id)
-    user = request.user.id if not request.user.is_anonymous() else get_client_ip(request)
+    user = request.user.id if not request.user.is_anonymous else get_client_ip(request)
     event = request.POST.get('event', 'unknown')
     if event not in Star.VALID_EVENTS:
         return JsonResponse({'success': False, 'message': 'Invalid event'})
